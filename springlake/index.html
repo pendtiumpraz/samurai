@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPRINGLAKE — Summarecon Bekasi | Lake Front Vertical Living</title>
+<meta name="description" content="Springlake by Summarecon Bekasi — premium lakeside apartment living. 8-hectare lakefront, resort amenities, direct mall access.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#d4a853;--gold-light:#f0d489;--gold-dark:#a07e33;
+  --teal:#0d9488;--teal-light:#2dd4bf;
+  --navy:#0a0a1a;--navy-soft:#10101f;
+  --cream:#f5f0e8;--mist:#b8c2cc;
+}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--cream);font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.6}
+h1,h2,h3{font-family:'Playfair Display',serif;font-weight:700;letter-spacing:.01em}
+
+/* ─── Nav ─── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 48px;display:flex;justify-content:space-between;align-items:center;transition:all .35s}
+.nav.scrolled{background:rgba(10,10,26,.92);backdrop-filter:blur(20px);padding:14px 48px;border-bottom:1px solid rgba(212,168,83,.12)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:22px;color:var(--cream);text-decoration:none;letter-spacing:5px;font-weight:600}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:34px;list-style:none}
+.nav-links a{color:var(--mist);text-decoration:none;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{padding:10px 24px;border:1px solid var(--gold);color:var(--gold)!important;border-radius:2px;transition:all .3s!important}
+.nav-cta:hover{background:var(--gold)!important;color:var(--navy)!important}
+
+/* ─── Scroll Sections ─── */
+.scroll-section{position:relative;min-height:300vh}
+.scroll-tracker{position:sticky;top:0;width:100%;height:100vh;overflow:hidden;z-index:1;background:var(--navy)}
+.scroll-frame{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
+.scroll-overlay{position:absolute;inset:0;z-index:2;pointer-events:none}
+
+/* ─── Hero ─── */
+.hero-overlay{background:linear-gradient(180deg,rgba(10,10,26,.25) 0%,rgba(10,10,26,.35) 45%,rgba(10,10,26,.85) 85%,rgba(10,10,26,1) 100%)}
+.hero-text{position:absolute;bottom:16%;left:50%;transform:translateX(-50%);text-align:center;z-index:10;width:92%;max-width:820px;pointer-events:auto}
+.hero-text .eyebrow{font-size:13px;color:var(--teal-light);letter-spacing:10px;margin-bottom:18px;font-weight:400;text-transform:uppercase}
+.hero-text h1{font-size:clamp(44px,8vw,104px);color:var(--cream);line-height:1;margin-bottom:14px;font-weight:900;text-shadow:0 4px 40px rgba(0,0,0,.7)}
+.hero-text .tag{font-size:clamp(14px,2vw,20px);color:var(--gold);letter-spacing:7px;font-weight:300;font-family:'Playfair Display',serif;font-style:italic;margin-bottom:30px}
+.hero-text p{font-size:15px;color:var(--mist);max-width:540px;margin:0 auto 34px;line-height:1.85}
+.btn-gold{display:inline-flex;align-items:center;gap:12px;padding:15px 42px;background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));color:var(--navy);font-family:'Playfair Display',serif;font-weight:700;font-size:14px;letter-spacing:2px;text-decoration:none;border-radius:4px;transition:all .3s;border:none;cursor:pointer}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 44px rgba(212,168,83,.35)}
+.scroll-hint{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:10;color:var(--mist);font-size:11px;letter-spacing:4px;text-transform:uppercase;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{opacity:.3;transform:translateX(-50%) translateY(0)}50%{opacity:1;transform:translateX(-50%) translateY(-7px)}}
+
+/* ─── Overlay text on scroll frames ─── */
+.section-overlay-text{position:absolute;bottom:14%;left:8%;z-index:10;pointer-events:auto;max-width:460px;opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.section-overlay-text.show{opacity:1;transform:translateY(0)}
+.section-overlay-text.right{left:auto;right:8%;text-align:right}
+.section-overlay-text.center{left:50%;right:auto;transform:translateX(-50%) translateY(28px);text-align:center;bottom:18%}
+.section-overlay-text.center.show{transform:translateX(-50%) translateY(0)}
+.section-overlay-text .label{font-size:12px;color:var(--gold);letter-spacing:5px;text-transform:uppercase;margin-bottom:14px;font-family:'Playfair Display',serif}
+.section-overlay-text h2{font-size:clamp(30px,4.5vw,58px);color:var(--cream);line-height:1.12;margin-bottom:16px;text-shadow:0 2px 26px rgba(0,0,0,.85)}
+.section-overlay-text p{font-size:15px;color:var(--mist);line-height:1.75;text-shadow:0 2px 12px rgba(0,0,0,.9)}
+
+/* ─── Content blocks ─── */
+.content-block{position:relative;z-index:5;padding:120px 48px;background:var(--navy-soft)}
+.content-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.content-label{display:inline-block;font-family:'Playfair Display',serif;font-size:12px;color:var(--gold);letter-spacing:5px;text-transform:uppercase;margin-bottom:20px;border-bottom:1px solid var(--gold);padding-bottom:8px}
+.content-text h2{font-size:clamp(28px,3.5vw,46px);color:var(--cream);line-height:1.2;margin-bottom:22px}
+.content-text h2 .gold{color:var(--gold)}.content-text h2 .teal{color:var(--teal-light)}
+.content-text p{font-size:15px;color:var(--mist);line-height:1.9;margin-bottom:16px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:8px}
+.stat-item{text-align:center;padding:26px 14px;border:1px solid rgba(212,168,83,.14);border-radius:6px;background:rgba(255,255,255,.015)}
+.stat-num{font-family:'Playfair Display',serif;font-size:32px;color:var(--gold);margin-bottom:6px}
+.stat-lbl{font-size:11px;color:var(--mist);letter-spacing:1.5px;text-transform:uppercase}
+
+/* ─── Amenities grid ─── */
+.amen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.amen-card{border:1px solid rgba(45,212,191,.12);border-radius:10px;padding:32px 26px;background:rgba(255,255,255,.02);transition:all .3s}
+.amen-card:hover{border-color:var(--teal);transform:translateY(-4px);box-shadow:0 14px 44px rgba(13,148,136,.12)}
+.amen-icon{font-size:30px;margin-bottom:16px}
+.amen-card h3{font-family:'Playfair Display',serif;font-size:19px;color:var(--cream);margin-bottom:10px}
+.amen-card p{font-size:13.5px;color:var(--mist);line-height:1.65}
+
+/* ─── CTA ─── */
+.cta-block{text-align:center;padding:130px 48px;background:linear-gradient(180deg,var(--navy) 0%,var(--navy-soft) 100%)}
+.cta-block .label{color:var(--teal-light);letter-spacing:6px;text-transform:uppercase;font-size:12px;margin-bottom:18px}
+.cta-block h2{font-size:clamp(30px,4.5vw,58px);color:var(--cream);margin-bottom:20px}
+.cta-block h2 .gold{color:var(--gold)}
+.cta-block p{color:var(--mist);max-width:520px;margin:0 auto 40px;font-size:15px;line-height:1.85}
+
+/* ─── Footer ─── */
+.footer{border-top:1px solid rgba(212,168,83,.12);padding:60px 48px 44px;text-align:center;background:var(--navy)}
+.footer-div{width:44px;height:1px;background:var(--gold);margin:0 auto 22px}
+.footer-logo{font-family:'Playfair Display',serif;font-size:23px;color:var(--cream);letter-spacing:7px;margin-bottom:12px}
+.footer-logo span{color:var(--gold)}
+.footer p{font-size:13px;color:var(--mist);letter-spacing:.5px;margin-bottom:6px}
+
+/* ─── Nav dots ─── */
+.dots{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:90;display:flex;flex-direction:column;gap:14px}
+.dots a{width:9px;height:9px;border-radius:50%;background:rgba(245,240,232,.25);transition:all .3s;display:block}
+.dots a:hover,.dots a.active{background:var(--gold);transform:scale(1.4)}
+
+/* ─── Responsive ─── */
+@media(max-width:1024px){.amen-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+  .nav{padding:16px 22px}.nav-links{display:none}
+  .scroll-section{min-height:220vh}
+  .content-block{padding:70px 24px}
+  .content-inner{grid-template-columns:1fr;gap:36px}
+  .amen-grid{grid-template-columns:1fr}
+  .cta-block{padding:80px 24px}
+  .dots{right:14px}
+  .section-overlay-text{bottom:10%;left:6%;max-width:78%}
+  .section-overlay-text.right{left:auto;right:6%}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="navbar">
+  <a href="#hero" class="nav-logo">SPRING<span>LAKE</span></a>
+  <ul class="nav-links">
+    <li><a href="#promenade">Lifestyle</a></li>
+    <li><a href="#interior">Residences</a></li>
+    <li><a href="#sports">Amenities</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="#contact" class="nav-cta">Enquire</a></li>
+  </ul>
+</nav>
+
+<!-- nav dots -->
+<div class="dots" id="dots">
+  <a href="#hero" data-i="1" title="Hero"></a>
+  <a href="#descent" data-i="2" title="Sanctuary"></a>
+  <a href="#portal" data-i="3" title="Nature & Luxury"></a>
+  <a href="#promenade" data-i="4" title="Lifestyle"></a>
+  <a href="#interior" data-i="5" title="Residences"></a>
+  <a href="#aerial" data-i="6" title="Masterplan"></a>
+  <a href="#nature" data-i="7" title="Nature"></a>
+  <a href="#sports" data-i="8" title="Active"></a>
+  <a href="#night" data-i="9" title="Evenings"></a>
+  <a href="#contact" data-i="10" title="Enquire"></a>
+</div>
+
+<!-- ═══ 1 · HERO ═══ -->
+<section class="scroll-section" id="hero">
+  <div class="scroll-tracker">
+    <img class="scroll-frame" id="sec01Frame" src="frames/section01_0001.jpg" alt="Springlake lake at sunrise">
+    <div class="scroll-overlay hero-overlay"></div>
+    <div class="hero-text">
+      <div class="eyebrow">Summarecon Bekasi</div>
+      <h1>SPRINGLAKE</h1>
+      <div class="tag">— Discover Lakeside Living —</div>
+      <p>An 8-hectare lakefront sanctuary where modern vertical living meets the calm of open water. Wake to golden light over the lake, every single day.</p>
+      <a href="#descent" class="btn-gold">DISCOVER →</a>
+    </div>
+    <div class="scroll-hint">↓ Scroll</div>
+  </div>
+</section>
+
+<!-- ═══ 2 · DESCENT ═══ -->
+<section class="scroll-section" id="descent">
+  <div class="scroll-tracker">
+    <img class="scroll-frame" id="sec02Frame" src="frames/section02_0001.jpg" alt="Descent to waterfront clubhouse">
+    <div class="scroll-overlay" style="background:linear-gradient(180deg,rgba(10,10,26,.5) 0%,rgba(10,10,26,.1) 40%,rgba(10,10,26,.6) 100%)"></div>
+    <div class="section-overlay-text center" data-reveal>
+      <div class="label">Arrive</div>
+      <h2>Welcome to Your Sanctuary</h2>
+      <p>A waterfront clubhouse, a quiet pier, a promenade that follows the water's edge — the moment you arrive, the city falls away.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Content · The Vision -->
+<div class="content-block" id="vision">
+  <div class="content-inner">
+    <div class="content-text">
+      <span class="content-label">The Vision</span>
+      <h2>Lake Front <span class="teal">Vertical</span> Living</h2>
+      <p>Springlake is an 8-hectare mixed-use lakefront enclave in the heart of Summarecon Bekasi — apartment towers and shopping arcades wrapped around a tranquil lake.</p>
+      <p>Every residence is oriented for a view: lake, pool, city or courtyard, each with an extended balcony to draw the outdoors in.</p>
+    </div>
+    <div>
+      <div class="stats">
+        <div class="stat-item"><div class="stat-num">8</div><div class="stat-lbl">Hectares Lakefront</div></div>
+        <div class="stat-item"><div class="stat-num">7,100</div><div class="stat-lbl">m² Inner Court</div></div>
+        <div class="stat-item"><div class="stat-num">4</div><div class="stat-lbl">View Orientations</div></div>
+        <div class="stat-item"><div class="stat-num">25</div><div class="stat-lbl">Min to Jakarta</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 3 · PORTAL ═══ -->
+<section class="scroll-section" id="portal">
+  <div class="scroll-tracker">
+    <img class="scroll-frame" id="sec03Frame" src="frames/section03_0001.jpg" alt="Through the water reflection">
+    <div class="scroll-overlay" style="background:linear-gradient(90deg,rgba(10,10,26,.55) 0%,rgba(10,10,26,.05) 50%,rgba(10,10,26,.55) 100%)"></div>
+    <div class="section-overlay-text center" data-reveal>
+      <div class="label">The Threshold</div>
+      <h2>Where Nature Meets Luxury</h2>
+      <p>Cross the mirror of the lake and step into a world designed in perfect balance — water, greenery and architecture as one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4 · PROMENADE ═══ -->
+<section class="scroll-section" id="promenade">
+  <div class="scroll-tracker">
+    <img class="scroll-frame" id="sec04Frame" src="frames/section04_0001.jpg" alt="Family on the lake promenade">
+    <div class="scroll-overlay" style="background:linear-gradient(90deg,rgba(10,10,26,.6) 0%,rgba(10,10,26,.05) 55%,rgba(10,10,26,.3) 100%)"></div>
+    <div class="section-overlay-text" data-reveal>
+      <div class="label">Lifestyle</div>
+      <h2>Every Day Feels<br>Like a Getaway</h2>
+      <p>Morning joggers, children at play, families strolling the lakeside boardwalk. Here, the weekend never really ends.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 5 · INTERIOR ═══ -->
+<section class="scroll-section" id="interior">
+  <div class="scroll-tracker">
+    <img class="scroll-frame" id="sec05Frame" src="frames/section05_0001.jpg" alt="Luxury apartment interior with lake view">
+    <div class="scroll-overlay" style="background:linear-gradient(90deg,rgba(10,10,26,.15) 0%,rgba(10,10,26,.05) 50%,rgba(10,10,26,.55) 100%)"></div>
+    <div class="section-overlay-text right" data-reveal>
+      <div class="label">The Residences</div>
+      <h2>Your Home<br>with a View</h2>
+      <p>Floor-to-ceiling glass frames the lake from the moment you wake. Natural light, open space, and a horizon that's entirely yours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Content · Residences -->
+<div class="content-block" id="residences">
+  <div class="content-inner" style="direction:rtl">
+    <div class="content-text" style="direction:ltr">
+      <span class="content-label">Designed Around You</span>
+      <h2>Light, Air & <span class="gold">Water</span></h2>
+      <p>Choose your outlook — sweeping lake panoramas, the resort pool, the landscaped courtyard or the city skyline. Extended balconies blur the line between inside and out.</p>
+      <p>Smart, efficient layouts make each square metre count, while premium finishes deliver a sense of arrival the moment you step inside.</p>
+    </div>
+    <div>
+      <div class="stats">
+        <div class="stat-item"><div class="stat-num">360°</div><div class="stat-lbl">Lake Panorama</div></div>
+        <div class="stat-item"><div class="stat-num">100%</div><div class="stat-lbl">Natural Light</div></div>
+        <div class="stat-item"><div class="stat-num">0</div><div class="stat-lbl">Steps to the Mall</div></div>
+        <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-lbl">Security</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 6 · AERIAL / MASTERPLAN ═══ -->
+<section class="scroll-section" id="aerial">
+  <div class="scroll-tracker">
+    <img class="scroll-frame" id="sec06Frame" src="frames/section06_0001.jpg" alt="Aerial masterplan reveal">
+    <div class="scroll-overlay" style="background:linear-gradient(180deg,rgba(10,10,26,.3) 0%,rgba(10,10,26,.1) 45%,rgba(10,10,26,.7) 100%)"></div>
+    <div class="section-overlay-text center" data-reveal>
+      <div class="label">The Masterplan</div>
+      <h2>A Masterpiece of Urban Planning</h2>
+      <p>Towers, parks, promenade and mall — choreographed around a single lake. Step back, and the whole vision comes into focus.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 7 · NATURE ═══ -->
+<section class="scroll-section" id="nature">
+  <div class="scroll-tracker">
+    <img class="scroll-frame" id="sec07Frame" src="frames/section07_0001.jpg" alt="Green parks and gardens">
+    <div class="scroll-overlay" style="background:linear-gradient(90deg,rgba(10,10,26,.55) 0%,rgba(10,10,26,.05) 55%,rgba(10,10,26,.35) 100%)"></div>
+    <div class="section-overlay-text" data-reveal>
+      <div class="label">Green Spaces</div>
+      <h2>Embraced<br>by Nature</h2>
+      <p>Botanical gardens, tree-lined jogging tracks and reflexology paths thread through the development — fresh air built into daily life.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 8 · SPORTS ═══ -->
+<section class="scroll-section" id="sports">
+  <div class="scroll-tracker">
+    <img class="scroll-frame" id="sec08Frame" src="frames/section08_0001.jpg" alt="Resort sports facilities">
+    <div class="scroll-overlay" style="background:linear-gradient(90deg,rgba(10,10,26,.3) 0%,rgba(10,10,26,.05) 50%,rgba(10,10,26,.55) 100%)"></div>
+    <div class="section-overlay-text right" data-reveal>
+      <div class="label">Active Living</div>
+      <h2>Live Active.<br>Live Well.</h2>
+      <p>An Olympic-size pool, thematic lagoons, tennis courts, an outdoor gym and alfresco dining — a 7,100&nbsp;m² resort at your doorstep.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Content · Amenities -->
+<div class="content-block">
+  <div style="max-width:1120px;margin:0 auto;text-align:center;width:100%">
+    <span class="content-label" style="margin:0 auto 20px">Resort Amenities</span>
+    <h2 style="font-size:clamp(28px,3.5vw,46px);color:var(--cream);margin-bottom:14px">Everything, Just <span style="color:var(--gold)">Steps Away</span></h2>
+    <p style="color:var(--mist);margin-bottom:8px;font-size:15px">A self-contained world wrapped around the lake.</p>
+    <div class="amen-grid">
+      <div class="amen-card"><div class="amen-icon">🏊</div><h3>Olympic Pool & Lagoons</h3><p>Olympic-size and thematic pools set in a 7,100&nbsp;m² resort inner court.</p></div>
+      <div class="amen-card"><div class="amen-icon">🛍️</div><h3>Direct Mall Access</h3><p>Skybridge and underpass to Summarecon Mall Bekasi — no vehicle needed.</p></div>
+      <div class="amen-card"><div class="amen-icon">🌳</div><h3>Lakeside Parks</h3><p>Jogging tracks, reflexology paths, BBQ gazebos and alfresco dining.</p></div>
+      <div class="amen-card"><div class="amen-icon">🎓</div><h3>Beside BINUS</h3><p>Adjacent to BINUS University and the Summarecon CBD business district.</p></div>
+      <div class="amen-card"><div class="amen-icon">🚄</div><h3>Connected</h3><p>Direct to Jakarta–Cikampek toll; 25 minutes to Jakarta via CommuterLine.</p></div>
+      <div class="amen-card"><div class="amen-icon">🏙️</div><h3>Lakeside Food City</h3><p>Downtown Walk and Bekasi Food City moments from your front door.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 9 · NIGHT ═══ -->
+<section class="scroll-section" id="night">
+  <div class="scroll-tracker">
+    <img class="scroll-frame" id="sec09Frame" src="frames/section09_0001.jpg" alt="Lake at twilight">
+    <div class="scroll-overlay" style="background:linear-gradient(180deg,rgba(10,10,26,.35) 0%,rgba(10,10,26,.1) 40%,rgba(10,10,26,.75) 100%)"></div>
+    <div class="section-overlay-text center" data-reveal>
+      <div class="label">After Dark</div>
+      <h2>Where Evenings Come Alive</h2>
+      <p>As golden hour fades to twilight, the towers glow and the lake catches the light. The most beautiful part of the day is the one you come home to.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 10 · CTA ═══ -->
+<section class="scroll-section" id="finale">
+  <div class="scroll-tracker">
+    <img class="scroll-frame" id="sec10Frame" src="frames/section10_0001.jpg" alt="Springlake at golden hour">
+    <div class="scroll-overlay" style="background:linear-gradient(180deg,rgba(10,10,26,.3) 0%,rgba(10,10,26,.45) 55%,rgba(10,10,26,.92) 100%)"></div>
+    <div class="hero-text">
+      <div class="eyebrow">Springlake by Summarecon</div>
+      <h2 style="font-size:clamp(34px,6vw,76px);color:var(--cream);line-height:1.05;margin-bottom:14px;font-weight:900;text-shadow:0 4px 40px rgba(0,0,0,.7)">Your Lakeside<br>Dream Awaits</h2>
+      <p>Limited lakefront residences now released. Speak with our team to arrange a private preview.</p>
+      <a href="#contact" class="btn-gold">REQUEST A PREVIEW →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / Contact -->
+<div class="cta-block" id="contact">
+  <div class="label">Enquire</div>
+  <h2>Own a View of the <span class="gold">Lake</span></h2>
+  <p>Springlake residences are released in limited collections. Register your interest for priority access, pricing and a private showroom appointment.</p>
+  <a href="https://www.summareconbekasi.id/clusters/springlake/" target="_blank" rel="noopener" class="btn-gold">REGISTER INTEREST →</a>
+</div>
+
+<footer class="footer">
+  <div class="footer-div"></div>
+  <div class="footer-logo">SPRING<span>LAKE</span></div>
+  <p>Lake Front Vertical Living · Summarecon Bekasi</p>
+  <p style="font-size:12px;opacity:.7">© 2026 Springlake by Summarecon — Concept landing page. Not an official sales channel.</p>
+</footer>
+
+<script>
+// ─── Nav background on scroll ───
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 80));
+
+// ─── Scroll-controlled frame viewers (10 sections, 100 frames each @10fps) ───
+const sections = [
+  {id:'hero',    el:'sec01Frame', prefix:'section01_'},
+  {id:'descent', el:'sec02Frame', prefix:'section02_'},
+  {id:'portal',  el:'sec03Frame', prefix:'section03_'},
+  {id:'promenade',el:'sec04Frame',prefix:'section04_'},
+  {id:'interior',el:'sec05Frame', prefix:'section05_'},
+  {id:'aerial',  el:'sec06Frame', prefix:'section06_'},
+  {id:'nature',  el:'sec07Frame', prefix:'section07_'},
+  {id:'sports',  el:'sec08Frame', prefix:'section08_'},
+  {id:'night',   el:'sec09Frame', prefix:'section09_'},
+  {id:'finale',  el:'sec10Frame', prefix:'section10_'}
+].map(s => ({...s, node:document.getElementById(s.el), total:100}));
+
+const cache = {};
+const pad = n => String(n).padStart(4,'0');
+function preload(prefix,from,to){
+  for(let i=from;i<=to;i++){
+    const k = prefix+pad(i);
+    if(!cache[k]){cache[k]=new Image();cache[k].src='frames/'+k+'.jpg';}
+  }
+}
+
+let ticking = false;
+function update(){
+  const viewH = window.innerHeight, scrollY = window.scrollY;
+  sections.forEach(s=>{
+    if(!s.node) return;
+    const sec = s.node.closest('.scroll-section');
+    const sectionTop = sec.getBoundingClientRect().top + scrollY;
+    const scrollable = sec.offsetHeight - viewH;
+    const progress = Math.max(0,Math.min(1,(scrollY - sectionTop)/scrollable));
+    const idx = Math.max(1,Math.min(s.total,Math.round(progress*(s.total-1)+1)));
+    const key = s.prefix+pad(idx);
+    if(s.node.dataset.frame !== key){
+      s.node.dataset.frame = key;
+      s.node.src = 'frames/'+key+'.jpg';
+    }
+    preload(s.prefix,Math.max(1,idx-3),Math.min(s.total,idx+6));
+  });
+}
+window.addEventListener('scroll',()=>{
+  if(!ticking){requestAnimationFrame(()=>{update();ticking=false;});ticking=true;}
+});
+window.addEventListener('load',update);
+window.addEventListener('resize',update);
+setTimeout(update,200);
+
+// ─── Reveal overlay text when its section is centered ───
+const revealObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    const t = e.target.querySelector('[data-reveal]');
+    if(t) t.classList.toggle('show', e.isIntersecting && e.intersectionRatio>0.35);
+  });
+},{threshold:[0,.35,.6]});
+document.querySelectorAll('.scroll-section').forEach(s=>revealObs.observe(s));
+
+// ─── Active nav dot ───
+const dots = [...document.querySelectorAll('#dots a')];
+const dotObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id = e.target.id;
+      dots.forEach(d=>d.classList.toggle('active', d.getAttribute('href')==='#'+id));
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('section[id], #contact').forEach(s=>dotObs.observe(s));
+</script>
+</body>
+</html>
