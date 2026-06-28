@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KATANA MASTERY — Premium Japanese Blades</title>
+<meta name="description" content="Premium Japanese katana...">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--dark:#0a0a0f;--darker:#050508;--steel:#94a3b8;--gold:#d4a853;--gold-light:#f0d080;--gold-dark:#a07830;--red:#991b1b;--crimson:#dc2626;--cream:#f5f0e8}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:var(--cream);font-family:'Inter',sans-serif;overflow-x:hidden}
+h1,h2,h3{font-family:'Cinzel',serif;font-weight:700;letter-spacing:.05em}
+.japanese{font-family:'Noto Sans JP',sans-serif}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:flex;justify-content:space-between;align-items:center;transition:all .3s}
+.nav.scrolled{background:rgba(5,5,8,.9);backdrop-filter:blur(20px);padding:14px 48px;border-bottom:1px solid rgba(212,168,83,.1)}
+.nav-logo{font-family:'Cinzel',serif;font-size:20px;color:var(--cream);text-decoration:none;letter-spacing:6px}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{color:var(--steel);text-decoration:none;font-size:13px;font-weight:400;letter-spacing:3px;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{padding:10px 24px;border:1px solid var(--gold);color:var(--gold)!important;border-radius:2px;transition:all .3s!important}
+.nav-cta:hover{background:var(--gold)!important;color:var(--darker)!important}
+
+/* Hero */
+.hero{position:relative;width:100%;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero video{position:absolute;top:50%;left:50%;min-width:100%;min-height:100%;transform:translate(-50%,-50%);object-fit:cover;z-index:0}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,5,8,.3) 0%,rgba(5,5,8,.5) 40%,rgba(5,5,8,.85) 80%,rgba(5,5,8,1) 100%);z-index:1}
+.hero-content{position:relative;z-index:2;text-align:center;max-width:900px;padding:0 24px;margin-top:-60px}
+.hero-kamon{font-size:48px;color:var(--gold);margin-bottom:16px;display:block;opacity:.7;letter-spacing:8px}
+.hero-content .japanese{font-size:18px;color:var(--steel);letter-spacing:12px;margin-bottom:24px;font-weight:300}
+.hero-content h1{font-size:clamp(42px,8vw,96px);color:var(--cream);line-height:1.1;margin-bottom:8px;text-shadow:0 4px 30px rgba(0,0,0,.5)}
+.hero-content .subtitle{font-size:clamp(16px,2.5vw,24px);color:var(--gold);letter-spacing:8px;font-weight:300;margin-bottom:40px;font-family:'Cinzel',serif}
+.hero-content p{font-size:16px;color:var(--steel);max-width:600px;margin:0 auto 48px;line-height:1.8;letter-spacing:1px}
+.hero-cta{display:inline-flex;align-items:center;gap:12px;padding:16px 48px;background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));color:var(--darker);font-family:'Cinzel',serif;font-weight:700;font-size:16px;letter-spacing:3px;text-decoration:none;border-radius:4px;transition:all .3s;cursor:pointer;border:none}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(212,168,83,.3)}
+.hero-scroll{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:2;color:var(--steel);font-size:12px;letter-spacing:4px;text-transform:uppercase;animation:fadeScroll 2s ease-in-out infinite}
+@keyframes fadeScroll{0%,100%{opacity:.3;transform:translateX(-50%) translateY(0)}50%{opacity:1;transform:translateX(-50%) translateY(-8px)}}
+
+/* Section */
+.section{position:relative;min-height:100vh;display:flex;align-items:center;padding:100px 48px}
+.section-inner{max-width:1280px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.section-content{position:relative;z-index:2}
+.section-label{display:inline-block;font-family:'Cinzel',serif;font-size:12px;color:var(--gold);letter-spacing:6px;text-transform:uppercase;margin-bottom:20px;border-bottom:1px solid var(--gold);padding-bottom:8px}
+.section-content h2{font-size:clamp(32px,4vw,52px);color:var(--cream);line-height:1.2;margin-bottom:24px}
+.section-content h2 .gold{color:var(--gold)}
+.section-content p{font-size:15px;color:var(--steel);line-height:1.9;margin-bottom:20px}
+.feature{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px}
+.feature-icon{width:20px;height:20px;background:var(--gold);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);flex-shrink:0;margin-top:4px}
+.feature-text h4{font-family:'Cinzel',serif;font-size:15px;color:var(--cream);margin-bottom:4px}
+.feature-text p{font-size:13px;color:var(--steel);margin-bottom:0}
+
+/* Video container */
+.video-container{position:relative;border-radius:8px;overflow:hidden;box-shadow:0 20px 80px rgba(0,0,0,.5);border:1px solid rgba(212,168,83,.15)}
+.video-container video{width:100%;height:auto;display:block}
+
+/* Stats */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}
+.stat-item{text-align:center;padding:24px 16px;border:1px solid rgba(212,168,83,.1);border-radius:4px}
+.stat-number{font-family:'Cinzel',serif;font-size:32px;color:var(--gold);margin-bottom:4px}
+.stat-label{font-size:11px;color:var(--steel);letter-spacing:2px;text-transform:uppercase}
+
+/* Products */
+.section.full{padding:120px 48px;text-align:center}
+.section.full .section-inner{grid-template-columns:1fr;max-width:900px}
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:48px}
+.product-card{border:1px solid rgba(212,168,83,.1);border-radius:8px;overflow:hidden;transition:all .3s;background:rgba(255,255,255,.02)}
+.product-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 12px 40px rgba(212,168,83,.1)}
+.product-image{height:240px;background:linear-gradient(135deg,#1a1a20,#0a0a0f);display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(212,168,83,.1);position:relative;overflow:hidden}
+.blade-line{width:60%;height:4px;background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light));position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg);box-shadow:0 0 30px rgba(212,168,83,.3)}
+.blade-line::before{content:'';position:absolute;top:-12px;left:0;width:40px;height:28px;border:1px solid rgba(212,168,83,.3);border-right:none;border-radius:4px 0 0 4px}
+.blade-line::after{content:'';position:absolute;top:-6px;right:0;width:50px;height:16px;border:1px solid rgba(212,168,83,.3);border-left:none;border-radius:0 4px 4px 0}
+.product-info{padding:24px}
+.product-name{font-family:'Cinzel',serif;font-size:18px;color:var(--cream);margin-bottom:8px}
+.product-desc{font-size:13px;color:var(--steel);line-height:1.6;margin-bottom:16px}
+.product-price{font-family:'Cinzel',serif;font-size:24px;color:var(--gold);margin-bottom:16px}
+.product-cta{display:inline-block;padding:12px 32px;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-size:12px;letter-spacing:3px;text-transform:uppercase;border-radius:2px;transition:all .3s;font-family:'Cinzel',serif}
+.product-cta:hover{background:var(--gold);color:var(--darker)}
+.section.alt .section-inner{direction:rtl}
+.section.alt .section-inner>*{direction:ltr}
+
+/* Section divider */
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,83,.2),transparent);margin:0 48px}
+
+/* Footer */
+.footer{border-top:1px solid rgba(212,168,83,.1);padding:60px 48px 40px;text-align:center}
+.footer-logo{font-family:'Cinzel',serif;font-size:24px;color:var(--cream);letter-spacing:8px;margin-bottom:16px}
+.footer-logo span{color:var(--gold)}
+.footer-divider{width:40px;height:1px;background:var(--gold);margin:24px auto}
+.footer p{font-size:13px;color:var(--steel);letter-spacing:1px}
+
+@media(max-width:1024px){.section-inner{gap:48px}.products-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
+  .nav{padding:16px 24px}.nav-links{display:none}
+  .section{padding:80px 24px}.section-inner{grid-template-columns:1fr;gap:40px}
+  .section.alt .section-inner{direction:ltr}.stats-row{grid-template-columns:repeat(2,1fr)}
+  .products-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<nav class="nav" id="navbar">
+  <a href="#" class="nav-logo">刀 <span>KATANA</span></a>
+  <ul class="nav-links">
+    <li><a href="#sharpness">Sharpness</a></li>
+    <li><a href="#craft">Craft</a></li>
+    <li><a href="#products">Blades</a></li>
+    <li><a href="#contact" class="nav-cta">Inquire</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <video autoplay muted loop playsinline><source src="videos/hero.mp4" type="video/mp4"></video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-kamon">⚔️</span>
+    <div class="japanese">武士の魂</div>
+    <h1>KATANA MASTERY</h1>
+    <div class="subtitle">— The Soul of the Samurai —</div>
+    <p>Forged by master smiths using centuries-old techniques. Each blade tells a story of honor, precision, and unwavering excellence.</p>
+    <a href="#products" class="hero-cta">EXPLORE COLLECTION →</a>
+  </div>
+  <div class="hero-scroll">↓ Scroll</div>
+</section>
+
+<!-- SHARPNESS -->
+<section class="section" id="sharpness">
+  <div class="section-inner">
+    <div class="section-content">
+      <span class="section-label">⚔️ Sharpness</span>
+      <h2>Cutting <span class="gold">Beyond</span> Perception</h2>
+      <p>A true katana does not cut — it passes through. Our blades undergo 60-day hand-polishing, achieving a 12° edge angle. So sharp it severs a falling silk ribbon mid-air.</p>
+      <div class="feature"><div class="feature-icon"></div><div class="feature-text"><h4>Hamon Wave Technology</h4><p>Differential hardening creates the iconic hamon line — superior sharpness and resilience.</p></div></div>
+      <div class="feature"><div class="feature-icon"></div><div class="feature-text"><h4>12° Razor Edge</h4><p>40+ hours manual honing on natural Japanese water stones.</p></div></div>
+      <div class="feature"><div class="feature-icon"></div><div class="feature-text"><h4>Zero-Resistance Cut</h4><p>Cleanly slices tatami, bamboo, and suspended silk.</p></div></div>
+    </div>
+    <div class="video-container"><video controls playsinline loop><source src="videos/sharpness.mp4" type="video/mp4"></video></div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CRAFT -->
+<section class="section alt" id="craft">
+  <div class="section-inner">
+    <div class="section-content">
+      <span class="section-label">🔨 Craftsmanship</span>
+      <h2>Forged by <span class="gold">Masters</span></h2>
+      <p>Each katana begins as raw tamahagane steel, folded 1,000+ times. Master smiths spend 3-6 months forging a single blade — unchanged for 800 years.</p>
+      <p>Certified by the Japanese Sword Smith Association, using finest materials from Tatara furnaces of Shimane.</p>
+      <div class="stats-row">
+        <div class="stat-item"><div class="stat-number">800</div><div class="stat-label">Years Tradition</div></div>
+        <div class="stat-item"><div class="stat-number">1000</div><div class="stat-label">Steel Folds</div></div>
+        <div class="stat-item"><div class="stat-number">60</div><div class="stat-label">Days Polish</div></div>
+        <div class="stat-item"><div class="stat-number">12°</div><div class="stat-label">Edge Angle</div></div>
+      </div>
+    </div>
+    <div class="video-container"><video controls playsinline loop><source src="videos/craft.mp4" type="video/mp4"></video></div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PRODUCTS -->
+<section class="section full" id="products">
+  <div class="section-inner">
+    <div class="section-content">
+      <span class="section-label">⚔️ Our Blades</span>
+      <h2>Choose Your <span class="gold">Katana</span></h2>
+      <p>Each blade individually numbered with certificate of authenticity.</p>
+    </div>
+    <div class="products-grid">
+      <div class="product-card"><div class="product-image"><div class="blade-line"></div></div><div class="product-info"><h3 class="product-name">KAGE NO KEN</h3><p class="product-desc">Shadow Blade — Full tang, bo-hi groove, black silk tsuka-ito, 28.5"</p><div class="product-price">$2,800</div><a href="#" class="product-cta">Inquire</a></div></div>
+      <div class="product-card"><div class="product-image"><div class="blade-line"></div></div><div class="product-info"><h3 class="product-name">HONŌ NO TACHI</h3><p class="product-desc">Flame Tachi — 32" blade, golden tsuka, premium samegawa ray skin</p><div class="product-price">$4,200</div><a href="#" class="product-cta">Inquire</a></div></div>
+      <div class="product-card"><div class="product-image"><div class="blade-line"></div></div><div class="product-info"><h3 class="product-name">SHINRA WAKIZASHI</h3><p class="product-desc">Divine Spark — Daisho set, silver menuki, dragon motif</p><div class="product-price">$3,600</div><a href="#" class="product-cta">Inquire</a></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CTA -->
+<section class="section full" id="contact" style="min-height:60vh;padding:80px 48px">
+  <div class="section-inner">
+    <div class="section-content">
+      <span class="section-label">📩 Contact</span>
+      <h2>Own a Piece of <span class="gold">History</span></h2>
+      <p style="max-width:600px;margin:0 auto 40px">Every katana made to order. Consult with our master smith to forge your perfect blade.</p>
+      <a href="#" class="hero-cta">REQUEST CONSULTATION →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-divider"></div>
+  <div class="footer-logo">刀 <span>KATANA</span> MASTERY</div>
+  <p style="margin-bottom:8px">Forged with honor. Crafted for eternity.</p>
+  <p>© 2026 Katana Mastery — All Rights Reserved</p>
+</footer>
+
+<script>
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{navbar.classList.toggle('scrolled',window.scrollY>100)});
+document.querySelectorAll('.video-container video').forEach(v=>{
+  const o=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting?v.play():v.pause()})},{threshold:.3});
+  o.observe(v)
+});
+</script>
+</body>
+</html>
