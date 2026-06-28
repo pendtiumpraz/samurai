@@ -1,0 +1,130 @@
+# SPRINGLAKE SUMMARECON — Premium Lake Living Landing Page
+
+## Project Overview
+Create a world-class scrolling animated landing page for Springlake Summarecon — a premium residential development with a large lake in Summarecon Bekasi, Indonesia. Target audience: affluent Indonesian families seeking luxury lakeside living.
+
+## Architecture
+
+### Folder Structure (in springlake/ directory)
+```
+springlake/
+├── storyboard/
+│   ├── reference-1.jpg       # GPT Image 2 generated
+│   ├── reference-2.jpg       # GPT Image 2 generated
+│   └── ... (5-10 reference images)
+├── frames/
+│   ├── video_01_0001.jpg     # Extracted frames from Seedance 2.0
+│   ├── video_01_0002.jpg
+│   ├── ... (all extracted frames)
+├── scripts/
+│   ├── modelslab-generate.sh   # For GPT Image 2 (image generation)
+│   ├── modelslab-video.sh      # For Seedance 2.0 (video generation)
+│   └── video-to-scroll.sh     # For converting video to frame sequence
+├── skill.md                    # Reusable skill for this type of page
+├── prompt-paper.txt            # This file
+├── prompt-continue.txt         # For continuation if needed
+├── progress.md                 # Progress tracking
+└── index.html                  # FINAL OUTPUT
+```
+
+### Storyboard Concept (10 Sections)
+
+Each section = scroll-controlled video (Seedance 2.0, 10s @ 480p = ~$0.44/video).
+Total budget: ~$4.40 for 10 videos.
+
+| # | Scene | Camera Movement | Mood | Text Overlay |
+|---|-------|----------------|------|-------------|
+| 1 | HERO — Sunrise over lake, misty morning, golden light reflecting on water, modern lakeside villas visible | Drone wide establishing → slow zoom out | Peaceful, endless | "SPRINGLAKE" / "Discover Lakeside Living" |
+| 2 | DESCENT — Drone flies down toward the waterfront, revealing clubhouse, pier, and promenade | Zoom in, fast descend approaching water | Inviting, grand | "Welcome to Your Sanctuary" |
+| 3 | PORTAL — Transition through water reflection (visual portal effect), emerging into a different view of the lake from the opposite side | 360° spin through water surface, emerge with splash | Magical, transformative | "Where Nature Meets Luxury" |
+| 4 | PROMENADE — Family walking along the lake promenade, children playing, joggers, morning vibes | Low-angle tracking shot following family | Warm, lifestyle | "Every Day Feels Like a Getaway" |
+| 5 | INTERIOR — Modern luxury home interior with floor-to-ceiling windows overlooking the lake, natural light flooding in | Slow pan from inside room → through window to lake view outside | Premium, aspirational | "Your Home with a View" |
+| 6 | ZOOM OUT — From the interior, accelerate backward through the window, zooming out to reveal the entire Springlake cluster from above | Extreme fast zoom out (house → cluster → entire development) | Epic, breathtaking | "A Masterpiece of Urban Planning" |
+| 7 | NATURE — Sweeping view of green spaces: parks, botanical gardens, jogging track lined with trees, butterfly garden | Slow drone flyover, weaving through trees | Fresh, serene | "Embraced by Nature" |
+| 8 | SPORTS — Active scenes: swimming pool, tennis court, basketball, fitness center | Dynamic drone swoop, fast cuts between facilities | Energetic, vibrant | "Live Active. Live Well." |
+| 9 | NIGHT — Sunset transition to night: golden hour → twilight → lights reflecting on the lake, illuminated clubhouse | Slow time-lapse style, camera drifting | Romantic, magical | "Where Evenings Come Alive" |
+| 10 | CTA — Grand final wide shot of the entire Springlake at golden hour, logo overlay, contact info | Wide establishing, slow pull back | Closing, aspirational | "Springlake by Summarecon" / "Your Lakeside Dream Awaits" + CTA button |
+
+### Key Design Requirements
+
+1. **Scroll-Controlled Video**: Each section uses the frame-by-frame scroll technique. Frames extracted at 10fps from Seedance 2.0 (10s = 100 frames per section).
+
+2. **Zoom In/Out Effects**: Camera movements should be extreme — fast zooms, dramatic swoops, portal transitions.
+
+3. **Text Syncing**: Text paragraphs and headlines should fade in/out at specific scroll positions within each section, not all at once.
+
+4. **Buttons & Elements**: CTA buttons, navigation dots, animated decorative elements should appear at precise scroll positions with smooth animations.
+
+5. **Interconnected Sections**: Each video section should feel like it naturally continues from the previous one (visual continuity).
+
+6. **Elegant Design**: 
+   - Color palette: Gold (#d4a853), Teal (#0d9488), Navy (#0a0a1a), Warm cream (#f5f0e8)
+   - Fonts: Playfair Display (headings), Inter (body)
+   - Subtle particle/ambient effects
+   - Minimalist, premium feel
+
+7. **Psychological Scroll Effect**: The scroll itself should feel like a cinematic journey — with varying scroll speeds (fast sections for energy, slow sections for serenity).
+
+### Execution Steps
+
+#### STEP 1: Research
+- Search the web for "Springlake Summarecon Bekasi" to understand the project
+- Look for visual references, key selling points, location details
+- Document findings in storyboard/research.md
+
+#### STEP 2: Generate Reference Images (GPT Image 2)
+Use modelslab-generate.sh to create 5-10 reference/storyboard images:
+- `bash springlake/scripts/modelslab-generate.sh --prompt "..." --ratio 16:9`
+- Create images for: hero lake view, modern home interior, family promenade, sports facilities, night scene
+- Save to springlake/storyboard/
+
+#### STEP 3: Generate Videos (Seedance 2.0 Mini)
+Use modelslab-video.sh for each of the 10 sections:
+- `bash springlake/scripts/modelslab-video.sh --prompt "..." --duration 10 --ratio 16:9 --resolution 480p`
+- Generate cinematic prompts with detailed camera movement descriptions
+- Save videos to springlake/ as source reference
+
+#### STEP 4: Convert Videos to Frame Sequences
+For each generated video, extract frames:
+- `ffmpeg -i <video.mp4> -vf "fps=10" -q:v 60 frames/section01_%04d.jpg`
+
+#### STEP 5: Build index.html
+Create a single-page HTML with:
+- 10 scroll-controlled sections, each 300vh tall
+- Sticky frame viewer per section
+- Text appearing at specific scroll percentages
+- Smooth transitions between sections
+- Navigation dots
+- CTA buttons
+- Responsive design
+- Preloading for smooth playback
+- All styles inline (no external dependencies except Google Fonts)
+
+#### STEP 6: Create skill.md
+Document the complete workflow as a reusable skill file.
+
+#### STEP 7: Create progress.md
+Track what's done and pending.
+
+#### STEP 8: Push to GitHub
+```bash
+git add springlake/
+git commit -m "feat: Springlake Summarecon landing page"
+git push origin main
+```
+
+## Budget Constraint
+- 10 Seedance videos @ ~$0.44 each = ~$4.40 total
+- 10 GPT Image 2 images @ minimal cost = ~$0.20
+- Total estimated cost: < $5.00
+
+## Claude Code Instructions
+- When calling modelslab scripts, ALWAYS use full path: `bash springlake/scripts/modelslab-video.sh`
+- Model ID for Seedance: `seedance-2-mini-t2v`
+- Model ID for images: `gpt-image-2-t2i`
+- API Key is in /etc/environment
+- For video generation, pass --wait flag or use the polling pattern
+- Video generation takes 30-120 seconds per video
+- Image generation takes 20-60 seconds per image
+- IMPORTANT: Images generated by GPT Image 2 are saved to /root/.openclaw/workspace/generate/ — copy them to springlake/storyboard/
+- Videos generated by Seedance are saved to /root/.openclaw/workspace/generate/ — copy them to springlake/ directory
