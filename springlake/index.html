@@ -103,6 +103,263 @@ h1,h2,h3{font-family:'Playfair Display',serif;font-weight:700;letter-spacing:.01
 .dots a{width:9px;height:9px;border-radius:50%;background:rgba(245,240,232,.25);transition:all .3s;display:block}
 .dots a:hover,.dots a.active{background:var(--gold);transform:scale(1.4)}
 
+/* ═══════════════════════════════════════════
+   VIDEO HERO — Cinematic Background
+   ═══════════════════════════════════════════ */
+.video-hero {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.video-hero video {
+  position: absolute;
+  top: 50%; left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+}
+
+/* Fallback image when video not loaded yet */
+.video-hero .video-fallback {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* Parallax offset — scroll pulls video up slightly */
+.video-hero .parallax-video {
+  transition: transform 0.1s ease-out;
+}
+
+/* Cinematic overlay gradients */
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, transparent 0%, rgba(10,10,26,.15) 50%),
+    radial-gradient(ellipse 100% 50% at 50% 0%, transparent 0%, rgba(10,10,26,.2) 100%),
+    linear-gradient(180deg,
+      rgba(10,10,26,.45) 0%,
+      rgba(10,10,26,.15) 30%,
+      rgba(10,10,26,.10) 50%,
+      rgba(10,10,26,.35) 70%,
+      rgba(10,10,26,.75) 90%,
+      rgba(10,10,26,.97) 100%
+    );
+  pointer-events: none;
+}
+
+/* Ambient light overlay — subtle gold glow from bottom */
+.hero-ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: radial-gradient(ellipse 120% 30% at 50% 100%, rgba(212,168,83,.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Hero content — centered with cinematic spacing */
+.hero-cinematic {
+  position: absolute;
+  bottom: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+  width: 92%;
+  max-width: 900px;
+  pointer-events: auto;
+}
+
+/* Text reveal animations */
+.hero-cinematic .reveal-item {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: heroReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-cinematic .reveal-item:nth-child(1) { animation-delay: .3s; }
+.hero-cinematic .reveal-item:nth-child(2) { animation-delay: .7s; }
+.hero-cinematic .reveal-item:nth-child(3) { animation-delay: 1.1s; }
+.hero-cinematic .reveal-item:nth-child(4) { animation-delay: 1.5s; }
+
+@keyframes heroReveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-cinematic .eyebrow {
+  font-size: 13px;
+  color: var(--teal-light);
+  letter-spacing: 10px;
+  margin-bottom: 18px;
+  font-weight: 400;
+  text-transform: uppercase;
+  text-shadow: 0 2px 20px rgba(0,0,0,.6);
+}
+
+.hero-cinematic h1 {
+  font-size: clamp(44px, 8vw, 104px);
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 14px;
+  font-weight: 900;
+  text-shadow: 0 4px 40px rgba(0,0,0,.7), 0 0 60px rgba(10,10,26,.5);
+}
+
+.hero-cinematic .tagline {
+  font-size: clamp(14px, 2vw, 20px);
+  color: var(--gold);
+  letter-spacing: 7px;
+  font-weight: 300;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  margin-bottom: 30px;
+  text-shadow: 0 2px 16px rgba(0,0,0,.5);
+}
+
+.hero-cinematic .hero-desc {
+  font-size: clamp(14px, 1.4vw, 18px);
+  color: var(--cream);
+  max-width: 580px;
+  margin: 0 auto 36px;
+  line-height: 1.7;
+  opacity: .85;
+  text-shadow: 0 2px 20px rgba(0,0,0,.5);
+}
+
+.hero-cinematic .cta-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* CTA button with glow */
+.btn-gold.cta-glow {
+  position: relative;
+  overflow: hidden;
+}
+.btn-gold.cta-glow::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.25) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity .4s;
+  pointer-events: none;
+}
+.btn-gold.cta-glow:hover::before {
+  opacity: 1;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 36px;
+  border: 1px solid var(--cream);
+  color: var(--cream);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 2.5px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all .35s;
+  backdrop-filter: blur(8px);
+  background: rgba(10,10,26,.15);
+}
+.btn-outline:hover {
+  background: var(--cream);
+  color: var(--navy);
+  transform: translateY(-2px);
+}
+
+/* Scroll hint — refined */
+.scroll-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 1s ease 2.2s forwards;
+}
+
+.scroll-hint .mouse {
+  width: 22px;
+  height: 34px;
+  border: 2px solid rgba(245,240,232,.4);
+  border-radius: 12px;
+  position: relative;
+}
+
+.scroll-hint .mouse .wheel {
+  width: 2px;
+  height: 8px;
+  background: var(--cream);
+  border-radius: 2px;
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scrollWheel 1.8s ease infinite;
+}
+
+.scroll-hint .scroll-label {
+  color: rgba(245,240,232,.45);
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+@keyframes scrollWheel {
+  0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  50% { opacity: .3; transform: translateX(-50%) translateY(8px); }
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; }
+}
+
+/* Loading state — shimmer while video loads */
+.video-hero.is-loading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--navy);
+  animation: fadeOut 1.5s ease 1s forwards;
+  pointer-events: none;
+}
+@keyframes fadeOut {
+  to { opacity: 0; }
+}
+
+/* ─── Hero height: 100vh (not 800vh like scroll-sections) ─── */
+#hero.scroll-section {
+  min-height: 100vh;
+}
+#hero .scroll-tracker {
+  position: relative;
+  height: 100vh;
+}
+
 /* ─── Responsive ─── */
 @media(max-width:1024px){.amen-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:768px){
@@ -115,6 +372,14 @@ h1,h2,h3{font-family:'Playfair Display',serif;font-weight:700;letter-spacing:.01
   .dots{right:14px}
   .section-overlay-text{bottom:10%;left:6%;max-width:78%}
   .section-overlay-text.right{left:auto;right:6%}
+  /* Mobile: video hero */
+  .hero-cinematic { bottom: 14%; }
+  .hero-cinematic h1 { font-size: clamp(32px, 12vw, 52px); }
+  .hero-cinematic .cta-group { flex-direction: column; align-items: center; }
+  .btn-outline { width: 100%; max-width: 280px; justify-content: center; }
+  .btn-gold { width: 100%; max-width: 280px; justify-content: center; }
+  #hero.scroll-section { min-height: 100vh; }
+  #hero .scroll-tracker { height: 100vh; }
 }
 </style>
 </head>
@@ -145,22 +410,75 @@ h1,h2,h3{font-family:'Playfair Display',serif;font-weight:700;letter-spacing:.01
   <a href="#contact" data-i="10" title="Enquire"></a>
 </div>
 
-<!-- ═══ 1 · HERO ═══ -->
+<!-- ═══════════════════════════════════════════
+   ╔══════════════════════════════════════╗
+   ║      VIDEO HERO — CINEMATIC         ║
+   ╚══════════════════════════════════════╝
+   
+   🎬 VIDEO PLACEHOLDER:
+   Ganti URL video di bawah dengan file video kamu.
+   Format: MP4 (H.264), WebM, atau MOV.
+   Rekomendasi: 1920×1080 @ 30fps, durasi 8-30 detik, loop.
+   
+   Cara:
+   1. Upload video ke hosting (VPS, R2, S3, atau CDN)
+   2. Ganti `src` attribute di <video> di bawah
+   3. Upload fallback image "frames/section01_0001.jpg" atau ganti juga
+   ========================================== -->
+
 <section class="scroll-section" id="hero">
   <div class="scroll-tracker">
-    <div class="scroll-stage">
-    <img class="scroll-frame" id="sec01FrameFade" src="" alt="" style="opacity:0">
-    <img class="scroll-frame" id="sec01Frame" src="frames/section01_0001.jpg" alt="Springlake lake at sunrise">
-  </div>
-    <div class="scroll-overlay hero-overlay"></div>
-    <div class="hero-text">
-      <div class="eyebrow">Summarecon Bekasi</div>
-      <h1>SPRINGLAKE</h1>
-      <div class="tag">— Discover Lakeside Living —</div>
-      <p>An 8-hectare lakefront sanctuary where modern vertical living meets the calm of open water. Wake to golden light over the lake, every single day.</p>
-      <a href="#descent" class="btn-gold">DISCOVER →</a>
+    
+    <!-- ═══ VIDEO BACKGROUND ═══ -->
+    <!-- 🎥 VIDEO_PLACEHOLDER: Ganti src dengan URL video kamu -->
+    <div class="video-hero is-loading" id="videoHero">
+      <!-- Fallback image — tampil sebelum video loaded -->
+      <img class="video-fallback" src="frames/section01_0001.jpg" alt="Springlake at sunrise">
+      
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        poster="frames/section01_0001.jpg"
+        id="heroVideo"
+        class="parallax-video"
+      >
+        <!-- 🔽 GANTI INI dengan URL video kamu -->
+        <source src="" type="video/mp4">
+        <!-- Cadangan format lain -->
+        <source src="" type="video/webm">
+        Browser kamu tidak mendukung video HTML5.
+      </video>
     </div>
-    <div class="scroll-hint">↓ Scroll</div>
+    
+    <!-- Cinematic overlays -->
+    <div class="hero-vignette"></div>
+    <div class="hero-ambient"></div>
+    
+    <!-- ═══ HERO CONTENT ═══ -->
+    <div class="hero-cinematic">
+      <div class="eyebrow reveal-item">Summarecon Bekasi</div>
+      <h1 class="reveal-item">
+        SPRING<span style="color:var(--gold)">LAKE</span>
+      </h1>
+      <div class="tagline reveal-item">— Discover Lakeside Living —</div>
+      <p class="hero-desc reveal-item">
+        An 8-hectare lakefront sanctuary where modern vertical living meets the calm of open water. Wake to golden light over the lake, every single day.
+      </p>
+      <div class="cta-group reveal-item">
+        <a href="#descent" class="btn-gold cta-glow" id="heroDiscoverBtn">DISCOVER →</a>
+        <a href="#contact" class="btn-outline">ENQUIRE</a>
+      </div>
+    </div>
+    
+    <!-- Scroll hint -->
+    <div class="scroll-hint">
+      <div class="mouse"><div class="wheel"></div></div>
+      <div class="scroll-label">Scroll</div>
+    </div>
+    
   </div>
 </section>
 
@@ -386,9 +704,44 @@ h1,h2,h3{font-family:'Playfair Display',serif;font-weight:700;letter-spacing:.01
 const nav = document.getElementById('navbar');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 80));
 
+// ─── VIDEO HERO: Parallax & Effects ───
+const heroVideo = document.getElementById('heroVideo');
+const videoHero = document.getElementById('videoHero');
+
+// Remove loading overlay once video can play
+if(heroVideo){
+  heroVideo.addEventListener('canplay', () => {
+    videoHero.classList.remove('is-loading');
+  });
+  // Fallback: remove loading after 3s even if video is slow
+  setTimeout(() => videoHero.classList.remove('is-loading'), 3000);
+}
+
+// Parallax: video shifts up slightly on scroll
+const heroSection = document.getElementById('hero');
+window.addEventListener('scroll', () => {
+  if(!heroVideo || !heroSection) return;
+  const rect = heroSection.getBoundingClientRect();
+  const progress = Math.max(0, Math.min(1, 1 - (rect.top + rect.height) / rect.height));
+  // Shift video up by max 40px as user scrolls through hero
+  heroVideo.style.transform = `translate(-50%, calc(-50% - ${progress * 40}px))`;
+}, {passive: true});
+
+// Mouse-tracking glow on CTA
+const ctaGlow = document.querySelector('.cta-glow');
+if(ctaGlow){
+  ctaGlow.addEventListener('mousemove', e => {
+    const rect = ctaGlow.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    ctaGlow.style.setProperty('--mx', x + '%');
+    ctaGlow.style.setProperty('--my', y + '%');
+  });
+}
+
 // ─── Scroll-controlled frame viewers (10 sections, 100 frames each @10fps) ───
+// Hero section uses video now, so we skip section01
 const sections = [
-  {id:'hero',    el:'sec01Frame', prefix:'section01_'},
   {id:'descent', el:'sec02Frame', prefix:'section02_'},
   {id:'portal',  el:'sec03Frame', prefix:'section03_'},
   {id:'promenade',el:'sec04Frame',prefix:'section04_'},
