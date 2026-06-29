@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formula — Amazing Video Hero</title>
+
+<!-- ═══════════════════════════════════════════════════════════════
+   🎬 VIDEO HERO — TEKNIK & TEMPLATE
+   
+   Cara setup:
+   1. Upload video ke hosting kamu (MP4 H.264, 1920×1080 @ 30fps)
+   2. Ganti <source src="URL-VIDEO-KAMU"> di baris ~82
+   3. Upload fallback image (opsional), ganti src di baris ~78
+   4. Selesai! Hero auto-play loop.
+   
+   Fitur:
+   - Fullscreen video background dengan parallax
+   - Vignette gradient + ambient light overlay
+   - Teks reveal animation (staggered)
+   - Mouse-tracking glow di CTA
+   - Smooth scroll navigation
+   - 100% responsive
+   ============================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ═══ RESET ═══ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#d4a853;--gold-light:#f0d489;--gold-dark:#a07e33;
+  --cream:#f5f0e8;--navy:#0a0a1a;--navy-soft:#10101f;
+  --mist:#b8c2cc;--teal-light:#2dd4bf;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--navy);color:var(--cream);
+  font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:'Playfair Display',serif;font-weight:700}
+
+/* ═══ NAV ═══ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:22px 48px;display:flex;justify-content:space-between;
+  align-items:center;transition:all .35s;
+}
+.nav.scrolled{
+  background:rgba(10,10,26,.92);backdrop-filter:blur(20px);
+  padding:14px 48px;border-bottom:1px solid rgba(212,168,83,.12);
+}
+.nav-logo{font-family:'Playfair Display',serif;font-size:22px;color:var(--cream);text-decoration:none;letter-spacing:5px;font-weight:600}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:34px;list-style:none}
+.nav-links a{color:var(--mist);text-decoration:none;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+
+/* ══ NAV CTA ══ */
+.nav-cta{padding:10px 24px;border:1px solid var(--gold);color:var(--gold)!important;border-radius:2px;transition:all .3s!important}
+.nav-cta:hover{background:var(--gold)!important;color:var(--navy)!important}
+
+/* ═══════════════════════════════════════════════════
+   HERO SECTION — CINEMATIC VIDEO BACKGROUND
+   ═══════════════════════════════════════════════════ */
+.hero{
+  position:relative;width:100%;height:100vh;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ── Video container ── */
+.video-bg{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  overflow:hidden;z-index:0;background:var(--navy);
+}
+.video-bg video{
+  position:absolute;top:50%;left:50%;
+  min-width:100%;min-height:100%;width:auto;height:auto;
+  transform:translate(-50%,-50%);
+  object-fit:cover;
+}
+.video-fallback{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  object-fit:cover;z-index:-1;
+}
+/* Loading shimmer */
+.video-bg.is-loading::after{
+  content:'';position:absolute;inset:0;z-index:2;
+  background:var(--navy);
+  animation:loadingFade 1.5s ease 1s forwards;
+  pointer-events:none;
+}
+@keyframes loadingFade{to{opacity:0}}
+
+/* ── Overlays ── */
+.vignette{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, transparent 0%, rgba(10,10,26,.15) 50%),
+    radial-gradient(ellipse 100% 50% at 50% 0%, transparent 0%, rgba(10,10,26,.2) 100%),
+    linear-gradient(180deg,
+      rgba(10,10,26,.45) 0%, rgba(10,10,26,.15) 30%,
+      rgba(10,10,26,.08) 50%, rgba(10,10,26,.35) 70%,
+      rgba(10,10,26,.75) 88%, rgba(10,10,26,.97) 100%
+    );
+}
+.ambient{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(ellipse 120% 30% at 50% 100%, rgba(212,168,83,.08) 0%, transparent 70%);
+}
+/* Decorative beams — subtle light rays */
+.beams{
+  position:absolute;inset:0;z-index:3;pointer-events:none;
+  overflow:hidden;
+}
+.beams::before,.beams::after{
+  content:'';position:absolute;top:-30%;width:2px;height:160%;
+  background:linear-gradient(180deg,transparent 0%,rgba(212,168,83,.04) 40%,rgba(212,168,83,.08) 50%,transparent 100%);
+  animation:beamSweep 8s ease-in-out infinite;
+}
+.beams::before{left:25%;animation-delay:0s}
+.beams::after{left:65%;animation-delay:4s}
+@keyframes beamSweep{
+  0%,100%{transform:translateY(-10%) rotate(2deg);opacity:0}
+  20%{opacity:1}
+  50%{transform:translateY(10%) rotate(-2deg);opacity:1}
+  80%{opacity:0}
+}
+
+/* Parallax video */
+.parallax-video{will-change:transform}
+
+/* ── Hero overlay content ── */
+.hero-content{
+  position:relative;z-index:10;text-align:center;
+  width:92%;max-width:900px;padding:0 20px;
+  pointer-events:auto;
+}
+
+/* Staggered reveal animation */
+.hero-content .rv{
+  opacity:0;transform:translateY(28px);
+  animation:revealUp .9s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+.hero-content .rv:nth-child(1){animation-delay:.3s}
+.hero-content .rv:nth-child(2){animation-delay:.65s}
+.hero-content .rv:nth-child(3){animation-delay:1s}
+.hero-content .rv:nth-child(4){animation-delay:1.3s}
+.hero-content .rv:nth-child(5){animation-delay:1.6s}
+@keyframes revealUp{to{opacity:1;transform:translateY(0)}}
+
+.hero-content .eyebrow{
+  font-size:13px;color:var(--teal-light);
+  letter-spacing:10px;margin-bottom:16px;
+  font-weight:400;text-transform:uppercase;
+  text-shadow:0 2px 20px rgba(0,0,0,.5);
+}
+.hero-content h1{
+  font-size:clamp(42px,8vw,100px);color:var(--cream);
+  line-height:1;margin-bottom:12px;font-weight:900;
+  text-shadow:0 4px 40px rgba(0,0,0,.6),0 0 80px rgba(10,10,26,.4);
+}
+.hero-content .tagline{
+  font-size:clamp(14px,2vw,20px);color:var(--gold);
+  letter-spacing:7px;font-weight:300;
+  font-family:'Playfair Display',serif;font-style:italic;
+  margin-bottom:28px;text-shadow:0 2px 16px rgba(0,0,0,.4);
+}
+.hero-content .desc{
+  font-size:clamp(14px,1.4vw,18px);color:var(--cream);
+  max-width:560px;margin:0 auto 34px;line-height:1.7;
+  opacity:.85;text-shadow:0 2px 20px rgba(0,0,0,.4);
+}
+
+/* ── CTA Group ── */
+.cta-group{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:15px 42px;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));
+  color:var(--navy);font-family:'Playfair Display',serif;font-weight:700;
+  font-size:14px;letter-spacing:2px;text-decoration:none;border-radius:4px;
+  transition:all .3s;border:none;cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.btn-primary::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),
+    rgba(255,255,255,.25) 0%, transparent 50%);
+  opacity:0;transition:opacity .35s;pointer-events:none;
+}
+.btn-primary:hover::before{opacity:1}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 44px rgba(212,168,83,.35)}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 36px;border:1px solid var(--cream);
+  color:var(--cream);font-family:'Inter',sans-serif;font-weight:600;
+  font-size:13px;letter-spacing:2.5px;text-decoration:none;
+  text-transform:uppercase;transition:all .35s;
+  backdrop-filter:blur(8px);background:rgba(10,10,26,.15);
+}
+.btn-secondary:hover{background:var(--cream);color:var(--navy);transform:translateY(-2px)}
+
+/* ── Scroll hint ── */
+.scroll-hint{
+  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+  z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;animation:fadeUp 1s ease 2.2s forwards;
+}
+.mouse{width:22px;height:34px;border:2px solid rgba(245,240,232,.35);border-radius:12px;position:relative}
+.wheel{width:2px;height:8px;background:var(--cream);border-radius:2px;position:absolute;top:6px;left:50%;transform:translateX(-50%);animation:scrollWheel 1.8s ease infinite}
+.scroll-label{color:rgba(245,240,232,.4);font-size:10px;letter-spacing:4px;text-transform:uppercase}
+@keyframes scrollWheel{0%,100%{opacity:1;transform:translateX(-50%) translateY(0)}50%{opacity:.3;transform:translateX(-50%) translateY(8px)}}
+@keyframes fadeUp{to{opacity:1}}
+
+/* ═══ CONTENT SECTION (demo) ═══ */
+.content-section{
+  position:relative;z-index:5;padding:120px 48px;
+  background:linear-gradient(180deg,var(--navy-soft),var(--navy));
+}
+.content-inner{max-width:900px;margin:0 auto;text-align:center}
+.content-inner .label{
+  font-size:12px;color:var(--gold);letter-spacing:5px;
+  text-transform:uppercase;margin-bottom:18px;font-family:'Playfair Display',serif;
+}
+.content-inner h2{
+  font-size:clamp(28px,4vw,48px);color:var(--cream);line-height:1.2;margin-bottom:20px;
+}
+.content-inner h2 span{color:var(--gold)}
+.content-inner p{
+  font-size:15px;color:var(--mist);line-height:1.9;margin-bottom:24px;
+  max-width:680px;margin-left:auto;margin-right:auto;
+}
+.tech-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  max-width:800px;margin:50px auto 0;
+}
+.tech-card{
+  padding:36px 24px;border:1px solid rgba(212,168,83,.12);
+  border-radius:8px;background:rgba(255,255,255,.015);
+  transition:all .3s;
+}
+.tech-card:hover{transform:translateY(-4px);border-color:rgba(212,168,83,.3);box-shadow:0 12px 40px -20px rgba(212,168,83,.2)}
+.tech-card .icon{font-size:28px;margin-bottom:14px;display:block}
+.tech-card h3{font-size:13px;letter-spacing:2px;color:var(--gold);margin-bottom:8px}
+.tech-card p{font-size:13px;color:var(--mist);line-height:1.6;margin:0}
+
+/* ═══ FOOTER ═══ */
+.footer{
+  position:relative;z-index:5;padding:40px 48px;
+  background:var(--navy);text-align:center;
+  border-top:1px solid rgba(212,168,83,.08);
+}
+.footer p{font-size:12px;color:var(--mist);line-height:1.8}
+.footer p a{color:var(--gold);text-decoration:none}
+
+/* ─── Responsive ─── */
+@media(max-width:768px){
+  .nav{padding:16px 22px}
+  .nav-links{display:none}
+  .hero-content{bottom:auto;padding:0 16px}
+  .hero-content h1{font-size:clamp(32px,12vw,50px)}
+  .cta-group{flex-direction:column;align-items:center}
+  .btn-primary,.btn-secondary{width:100%;max-width:280px;justify-content:center}
+  .content-section{padding:70px 24px}
+  .tech-grid{grid-template-columns:1fr;gap:16px}
+  .footer{padding:30px 22px}
+}
+@media(min-width:769px)and(max-width:1024px){
+  .tech-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="nav" id="navbar">
+  <a href="#" class="nav-logo">FORM<span>ULA</span></a>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#teknik">Teknik</a></li>
+    <li><a href="#contact" class="nav-cta">Kontak</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════
+     HERO — CINEMATIC VIDEO
+     ═══════════════════════════════════════════════════ -->
+<section class="hero" id="hero">
+
+  <!-- ══ VIDEO BACKGROUND ══ -->
+  <!--
+    🎬  VIDEO PLACEHOLDER  🎬
+    ───────────────────────────
+    Ganti "URL-VIDEO-KAMU" di bawah dengan URL video kamu.
+
+    FORMAT REKOMENDASI:
+      - MP4 (H.264) / WebM / MOV
+      - Resolusi: 1920×1080 @ 30fps
+      - Durasi: 8–30 detik (akan di-loop)
+      - Ukuran file: usahakan ≤ 50MB buat loading cepat
+      - Tidak perlu audio (muted otomatis)
+
+    CARA UPLOAD (pilih salah satu):
+      A. VPS/R2 → upload ke bucket, dapatkan public URL
+      B. Cloudflare R2 / S3 → upload, set public read
+      C. CDN → deploy video, dapatkan direct link
+
+    TIPS:
+      - Pakai video slow-motion (60fps → play di 30fps) buat efek cinematic
+      - Hindari video dengan teks/tulisan — hero overlay sudah ada teks
+      - Footage aerial / landscape / time-lapse cocok banget
+      - Kalau durasi pendek (3-5 detik), loop akan mulus
+  -->
+  <div class="video-bg is-loading" id="videoContainer">
+    <!-- Fallback image — muncul sebelum video siap -->
+    <img class="video-fallback"
+         src=""
+         alt="Hero fallback"
+         onerror="this.style.display='none'">
+
+    <!-- 🎥 GANTI "URL-VIDEO-KAMU" dengan URL video kamu ↓ -->
+    <video autoplay muted loop playsinline preload="auto"
+           poster="" id="heroVideo" class="parallax-video">
+      <source src="" type="video/mp4">
+      <source src="" type="video/webm">
+      Browser kamu tidak mendukung video HTML5.
+    </video>
+    <!-- ↑ GANTI URL DI ATAS -->
+
+  </div>
+
+  <!-- Cinematic overlays -->
+  <div class="vignette"></div>
+  <div class="ambient"></div>
+  <div class="beams"></div>
+
+  <!-- ══ HERO TEXT ══ -->
+  <div class="hero-content">
+    <div class="eyebrow rv">FORMULA</div>
+    <h1 class="rv">Amazing<br><span style="color:var(--gold)">Video Hero</span></h1>
+    <div class="tagline rv">— The Art of Cinematic Storytelling —</div>
+    <p class="desc rv">
+      Sebuah hero section dengan video background, vignette cinematic,
+      animasi teks reveal, dan parallax scroll — siap kamu custom dengan video sendiri.
+    </p>
+    <div class="cta-group rv">
+      <a href="#teknik" class="btn-primary" id="ctaMain">LIHAT TEKNIK →</a>
+      <a href="#contact" class="btn-secondary">Kontak</a>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="scroll-hint">
+    <div class="mouse"><div class="wheel"></div></div>
+    <div class="scroll-label">Scroll</div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     CONTENT — TEKNIK HERO
+     ═══════════════════════════════════════════════════ -->
+<section class="content-section" id="teknik">
+  <div class="content-inner">
+    <div class="label">Teknik Hero Section</div>
+    <h2>Cara Membuat <span>Amazing Hero</span></h2>
+    <p>
+      Hero section yang memukau gabungkan 3 elemen kunci: <strong>video berkualitas</strong>
+      sebagai background, <strong>gradient overlay</strong> untuk readability teks, dan
+      <strong>animasi micro-interaction</strong> untuk kesan premium.
+    </p>
+
+    <div class="tech-grid">
+      <div class="tech-card">
+        <span class="icon">🎬</span>
+        <h3>Video Background</h3>
+        <p>Fullscreen autoplay loop, object-fit cover, parallax scroll. Upload video kamu sendiri — gak perlu generate AI.</p>
+      </div>
+      <div class="tech-card">
+        <span class="icon">🎨</span>
+        <h3>Vignette + Ambient</h3>
+        <p>3-layer gradient overlay: vignette gelap di pinggir, ambient gold glow dari bawah, dan light beams dekoratif.</p>
+      </div>
+      <div class="tech-card">
+        <span class="icon">✨</span>
+        <h3>Staggered Reveal</h3>
+        <p>Teks muncul satu per satu dengan timing yang pas — eyebrow → title → tagline → deskripsi → CTA. Efek sinematik.</p>
+      </div>
+      <div class="tech-card">
+        <span class="icon">🖱️</span>
+        <h3>Mouse-Tracking Glow</h3>
+        <p>CTA button punya efek cahaya yang mengikuti cursor — detail kecil yang bikin kesan mewah dan interaktif.</p>
+      </div>
+      <div class="tech-card">
+        <span class="icon">📱</span>
+        <h3>Responsive</h3>
+        <p>Full responsive dari mobile ke desktop. Video tetap fullscreen di semua ukuran layar, teks menyesuaikan.</p>
+      </div>
+      <div class="tech-card">
+        <span class="icon">⚡</span>
+        <h3>Loading State</h3>
+        <p>Fallback image tampil saat video loading, dengan fade-out smooth setelah video siap — gak ada white flash.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:48px;font-size:14px;color:var(--gold)">
+      💡 Cukup ganti <code>&lt;source src&gt;</code> dengan URL video kamu — sisanya sudah siap pakai.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════════ -->
+<footer class="footer" id="contact">
+  <p>FORM<span style="color:var(--gold)">ULA</span> — Video Hero Template</p>
+  <p style="margin-top:4px">Dibuat untuk project <a href="https://github.com/pendtiumpraz/samurai" target="_blank">Samurai / Springlake</a></p>
+  <p style="margin-top:4px;opacity:.6">Ganti video di <code>formula/index.html</code> baris ~82</p>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT
+     ═══════════════════════════════════════════════════ -->
+<script>
+(function(){
+  'use strict';
+
+  // ─── Nav scroll background ───
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  }, {passive:true});
+
+  // ─── Video Hero — loading state ───
+  const video = document.getElementById('heroVideo');
+  const container = document.getElementById('videoContainer');
+
+  if(video){
+    video.addEventListener('canplay', () => container.classList.remove('is-loading'));
+    setTimeout(() => container.classList.remove('is-loading'), 3000);
+
+    // ─── Parallax — video shifts on scroll ───
+    const hero = document.getElementById('hero');
+    window.addEventListener('scroll', () => {
+      if(!hero) return;
+      const rect = hero.getBoundingClientRect();
+      const progress = Math.max(0, Math.min(1,
+        1 - (rect.top + rect.height) / rect.height
+      ));
+      video.style.transform =
+        `translate(-50%, calc(-50% - ${progress * 40}px))`;
+    }, {passive:true});
+  }
+
+  // ─── Mouse-tracking glow on CTA ───
+  const cta = document.getElementById('ctaMain');
+  if(cta){
+    cta.addEventListener('mousemove', e => {
+      const r = cta.getBoundingClientRect();
+      cta.style.setProperty('--mx',
+        ((e.clientX - r.left) / r.width * 100) + '%');
+      cta.style.setProperty('--my',
+        ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  }
+
+})();
+</script>
+</body>
+</html>
